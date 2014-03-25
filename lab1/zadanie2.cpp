@@ -3,18 +3,21 @@
 
 using namespace std;
 
+
+//ZADANIE 2
+
 template <class T>
 tablica <T>::tablica(int rozmiar)
 {
-	size_t *tab=new size_t[rozmiar];
+	T *tab=new T[rozmiar];
 	n=rozmiar;
 };
 
 template <class T>
-tablica <T>::tablica(const tablica &tab)
+tablica <T>::tablica(const tablica <T> &tab)
 {
-	n=tablica.n;
-	tab=tablica.tab;
+	n=tab.n;
+	tab=tab.tab;
 };
 
 template <class T>
@@ -29,7 +32,7 @@ int tablica <T>::rozmiar()
 };
 
 template <class T>
-void tablica <T>::zamien(tablica zmiana)
+void tablica <T>::zamien(tablica <T> zmiana)
 {
 	tablica tmp;
 	tmp.n=n;
@@ -52,17 +55,64 @@ void tablica <T>::resize()
 };
 
 template <class T>
-size_t *tablica <T>::begin()
+T &tablica <T>::begin()
 {
 	return tab[0];
 };
 
 template <class T>
-size_t *tablica <T>::end()
+T &tablica <T>::end()
 {
 	return tab[n];
 };
 
+template <class T>
+tablica<T> & tablica <T>::operator=(const tablica<T> &tmp){
+	n=tmp.n;
+	tab=tmp.tab;
+	return *this;
+};
+
+template <class T>
+T & tablica <T>:: operator[](T elem){
+	return tab[elem];
+};
+
+template <class T>
+const T & tablica <T>::operator[](T elem) const{
+	return tab[elem];
+};
+
+template <class T>
+ostream & operator <<(ostream &wyjscie, const tablica <T> &tab){
+	for (int i=0;i<n;i++)
+		wyjscie << tab.tab[i]<<' ';
+};
+
+template <class T>
+istream & operator >> (istream &wejscie, const tablica<T> &tab){
+	wejscie>>tab.n;
+	for (int i=0;i<n;i++)
+		wejscie>>tab.tab[i];
+};
+
+template <class T>
+void tablica<T>::push_back(T const &elem){
+	tablica tmp(n+1);
+	tmp.n=n;
+	for(int i=0;i<n;i++)
+		tmp.tab[i]=tab[i];
+	tmp.tab[n]=elem;
+	tab=tmp;
+};
+
+template <class T>
+void tablica <T>::pop_back(){
+	tablica tmp(n-1);
+	for(int i=0;i<n-1;i++)
+		tmp.tab[i]=tab[i];
+	tab=tmp;
+}
 
 void main()
 {
