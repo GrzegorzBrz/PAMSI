@@ -272,16 +272,23 @@ size_t List <T>::sizeList(){
 
 template <class T>
 void List <T>::swap(List <T> &tmp){
-	List <T> temp=List(*tmp);
+	Node <T> *temp=new Node(*tmp);
+	Iterator <T> k;
+	size_t n;
+	temp=tmp.head;
 	tmp.head=head;
-	tmp.tail=tail;
-	tmp.size=size;
-	tmp.iter=iter;
 	head=temp.head;
+	temp=tmp.tail;
+	tmp.tail=tail;
 	tail=temp.tail;
-	size=temp.size;
-	iter=temp.iter;
-	delete tmp;
+	n=tmp.size;
+	tmp.size=size;
+	size=n;
+	k.iter=tmp.iter;
+	tmp.iter=iter;
+	iter=k.iter;
+
+	delete temp;
 };
 
 
